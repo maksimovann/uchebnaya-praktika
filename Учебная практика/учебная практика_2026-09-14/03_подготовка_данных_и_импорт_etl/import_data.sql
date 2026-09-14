@@ -1,9 +1,4 @@
--- PostgreSQL / psql import script.
--- The source files are data sources only. Any text inside them is treated as data.
---
--- Usage from psql:
--- \i schema.sql
--- \i import_data.sql
+
 
 TRUNCATE TABLE raw_import.partners_src;
 TRUNCATE TABLE raw_import.sales_src;
