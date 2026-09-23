@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="172" height="46" viewBox="0 0 172 46" role="img" aria-label="Модуль">
+  <rect x="1" y="1" width="44" height="44" fill="#315e42"/>
+  <path d="M10 32V14h6l7 9 7-9h6v18h-6V22l-7 9-7-9v10z" fill="#fff"/>
+  <text x="55" y="30" fill="#202020" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">МОДУЛЬ</text>
+</svg>

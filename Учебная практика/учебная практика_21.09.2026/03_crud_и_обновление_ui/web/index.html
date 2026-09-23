@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>CRM: Реестр партнеров</title>
+  <link rel="icon" type="image/svg+xml" href="/resources/favicon.svg">
+  <link rel="stylesheet" href="/app.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <img class="company-logo" src="/resources/logo.svg" alt="Логотип компании Модуль" width="172" height="46">
+      <div class="header-text">
+        <p class="section-label">ПАРТНЕРСКАЯ CRM</p>
+        <h1 id="page-title">Реестр партнеров</h1>
+      </div>
+    </header>
+
+    <main id="main-window" class="workspace app-window" aria-labelledby="main-heading">
+      <div class="toolbar">
+        <div class="list-heading">
+          <h2 id="main-heading">Партнеры <span id="partner-count" class="count"></span></h2>
+          <p id="list-status" role="status" aria-live="polite">Загрузка данных...</p>
+        </div>
+        <div class="toolbar-actions">
+          <label class="search-wrap">
+            <span class="visually-hidden">Поиск партнера</span>
+            <input id="search-input" type="search" placeholder="Поиск партнера" autocomplete="off">
+          </label>
+          <button id="refresh-button" class="button button-secondary" type="button">Обновить</button>
+          <button id="add-button" class="button button-primary" type="button">Добавить партнера</button>
+        </div>
+      </div>
+      <div id="partner-list" class="partner-list" aria-live="polite"></div>
+      <p id="empty-state" class="empty-state" hidden>Партнеры не найдены.</p>
+    </main>
+
+    <main id="partner-edit-window" class="workspace app-window" aria-labelledby="form-title" hidden>
+      <div class="form-heading">
+        <div>
+          <p class="section-label">КАРТОЧКА ПАРТНЕРА</p>
+          <h2 id="form-title">Добавление партнера</h2>
+        </div>
+        <button id="back-button" class="button button-secondary" type="button">Назад</button>
+      </div>
+      <form id="partner-form" novalidate>
+        <div class="form-grid">
+          <label class="field field-wide">Наименование <span aria-hidden="true">*</span>
+            <input name="company_name" required autocomplete="organization">
+          </label>
+          <label class="field">Тип партнера
+            <select name="partner_type" required>
+              <option value="ООО">ООО</option>
+              <option value="ИП">ИП</option>
+              <option value="ЗАО">ЗАО</option>
+              <option value="АО">АО</option>
+              <option value="ПАО">ПАО</option>
+              <option value="ТК">ТК</option>
+            </select>
+          </label>
+          <label class="field">Рейтинг
+            <input name="rating" type="number" min="0" step="1" value="0" inputmode="numeric">
+          </label>
+          <label class="field field-wide">Адрес
+            <input name="address" autocomplete="street-address">
+          </label>
+          <label class="field field-wide">ФИО директора
+            <input name="director_name" autocomplete="name">
+          </label>
+          <label class="field">ИНН
+            <input name="inn" required inputmode="numeric" placeholder="10 или 12 цифр">
+          </label>
+          <label class="field">Телефон
+            <input name="phone" type="tel" autocomplete="tel" placeholder="+7 999 123-45-67" title="Введите телефон в формате +7 999 123-45-67">
+          </label>
+          <label class="field field-wide">Email компании <span aria-hidden="true">*</span>
+            <input name="email" type="email" required autocomplete="email" placeholder="company@example.ru" title="Введите адрес в формате company@example.ru">
+          </label>
+        </div>
+        <div class="form-actions">
+          <button id="cancel-button" class="button button-secondary" type="button">Отмена</button>
+          <button class="button button-primary" type="submit">Сохранить</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <dialog id="message-dialog" class="message-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-content">
+      <div id="dialog-icon" class="dialog-icon" aria-hidden="true"></div>
+      <div>
+        <h2 id="dialog-title"></h2>
+        <p id="dialog-message"></p>
+      </div>
+    </div>
+    <div id="dialog-actions" class="dialog-actions"></div>
+  </dialog>
+</body>
+</html>

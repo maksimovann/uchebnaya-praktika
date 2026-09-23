@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <title>CRM: Список партнеров и скидок</title>
+  <link rel="icon" type="image/svg+xml" href="/resources/favicon.svg">
+  <link rel="stylesheet" href="/app.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <img class="company-logo" src="/resources/logo.svg" alt="Логотип компании Модуль" width="172" height="46">
+      <div class="header-text">
+        <p class="section-label">ПАРТНЕРСКАЯ CRM</p>
+        <h1>Список партнеров и скидок</h1>
+      </div>
+    </header>
+
+    <main class="workspace" aria-label="Список партнеров">
+      <div class="toolbar">
+        <div class="list-heading">
+          <h2>Партнеры <span id="partner-count" class="count"></span></h2>
+          <p id="list-status" role="status" aria-live="polite">Загрузка данных…</p>
+        </div>
+        <div class="toolbar-actions">
+          <label class="search-wrap">
+            <span class="visually-hidden">Поиск партнера</span>
+            <input id="search-input" type="search" placeholder="Поиск партнера" autocomplete="off">
+          </label>
+          <button id="refresh-button" class="button button-secondary" type="button">Обновить</button>
+        </div>
+      </div>
+
+      <div id="partner-list" class="partner-list" aria-live="polite"></div>
+      <p id="empty-state" class="empty-state" hidden>Партнеры не найдены.</p>
+    </main>
+  </div>
+
+</body>
+</html>

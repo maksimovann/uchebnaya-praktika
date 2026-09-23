@@ -23,7 +23,7 @@ SELECT
     btrim(inn),
     NULLIF(btrim(contact_email), ''),
     NULLIF(btrim(phone), ''),
-    NULLIF(btrim(rating), '')::NUMERIC(3, 2)
+    NULLIF(btrim(rating), '')::DECIMAL(3, 2)
 FROM raw_import.partners_src
 WHERE NULLIF(btrim(partner_id), '') IS NOT NULL
 ON CONFLICT (partner_id) DO UPDATE
@@ -169,7 +169,7 @@ SELECT
     pr.product_id,
     vs.parsed_sale_date,
     vs.quantity::INTEGER,
-    vs.total_amount::NUMERIC(12, 2)
+    vs.total_amount::DECIMAL(12, 2)
 FROM valid_sales AS vs
 JOIN partners AS p ON p.partner_id = vs.partner_id::INTEGER
 JOIN products AS pr ON pr.product_name = vs.product_name

@@ -2,6 +2,7 @@
 -- Core business tables are kept in 3NF:
 -- partners -> shipments <- products.
 
+DROP VIEW IF EXISTS partner_shipment_history;
 DROP TABLE IF EXISTS shipments CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS partners CASCADE;
@@ -13,7 +14,7 @@ CREATE TABLE partners (
     inn VARCHAR(12) NOT NULL UNIQUE,
     contact_email VARCHAR(255) UNIQUE,
     phone VARCHAR(50),
-    rating NUMERIC(3, 2),
+    rating DECIMAL(3, 2),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT partners_inn_format_chk CHECK (inn ~ '^[0-9]{10}([0-9]{2})?$'),
@@ -35,7 +36,7 @@ CREATE TABLE shipments (
     product_id INTEGER NOT NULL,
     shipment_date DATE NOT NULL,
     quantity INTEGER NOT NULL,
-    total_amount NUMERIC(12, 2) NOT NULL,
+    total_amount DECIMAL(12, 2) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT shipments_partner_id_fk FOREIGN KEY (partner_id)
         REFERENCES partners(partner_id)
@@ -51,22 +52,6 @@ CREATE TABLE shipments (
 
 CREATE INDEX idx_shipments_partner_date ON shipments(partner_id, shipment_date DESC);
 CREATE INDEX idx_shipments_product ON shipments(product_id);
-
-CREATE OR REPLACE VIEW partner_shipment_history AS
-SELECT
-    s.shipment_id,
-    s.shipment_date,
-    p.partner_id,
-    p.company_name,
-    p.inn,
-    pr.product_id,
-    pr.product_name,
-    s.quantity,
-    s.total_amount,
-    ROUND(s.total_amount / NULLIF(s.quantity, 0), 2) AS unit_price
-FROM shipments AS s
-JOIN partners AS p ON p.partner_id = s.partner_id
-JOIN products AS pr ON pr.product_id = s.product_id;
 
 CREATE SCHEMA raw_import;
 
@@ -98,3 +83,19 @@ CREATE TABLE raw_import.etl_rejected_sales (
     rejection_reason TEXT NOT NULL,
     rejected_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE VIEW partner_shipment_history AS
+SELECT
+    s.shipment_id,
+    s.shipment_date,
+    p.partner_id,
+    p.company_name,
+    p.inn,
+    pr.product_id,
+    pr.product_name,
+    s.quantity,
+    s.total_amount,
+    ROUND(s.total_amount / NULLIF(s.quantity, 0), 2) AS unit_price
+FROM shipments AS s
+JOIN partners AS p ON p.partner_id = s.partner_id
+JOIN products AS pr ON pr.product_id = s.product_id;
